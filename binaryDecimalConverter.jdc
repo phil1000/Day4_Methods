@@ -1,0 +1,68 @@
+// Simple mortgage calculator programme
+print("This program converts a binary to a decimal and vice versa");
+
+// initialise a converter class
+BaseConverter numBaseConverter = new BaseConverter();
+
+String strInput="";
+
+print("\nPlease enter B if you want to convert binary to Decimal or \nD if you want to convert Decimal to Base 2 \t");
+
+strInput=readLine();
+
+if (strInput.equals("B")) {
+	print("\nNow enter the binary number to be converted \t");
+	numBaseConverter.setBinary(readLine());
+	print("\n The equivalent decimal is: \t" + numBaseConverter.binary2Decimal());
+}
+else {
+	print("\nNow enter the decimal number to be converted \t");
+	numBaseConverter.setDecimal(readLine());
+	print("\n The equivalent binary is: \t" + numBaseConverter.decimal2Binary());
+}
+
+class BaseConverter
+{
+	int decimal=0;
+	String binary="";
+	
+	void setDecimal(String strDecimal) {
+		decimal=Integer.parseInt(strDecimal);
+	}
+	
+	void setBinary(String strBinary) {
+		binary=strBinary;
+	}
+	
+	int binary2Decimal() {
+		int binaryLen=binary.length();
+		int binaryValue=0;
+		for (int i=0; i<binaryLen; i++) {
+			binaryValue = Character.getNumericValue( binary.charAt(binaryLen-(1+i)) );
+			decimal=decimal + binaryValue * ((int) Math.pow(2, i));
+		}
+		return decimal;
+	}
+	
+	String decimal2Binary() {
+		int digit;
+		String reverseBinary="";
+		
+		while (decimal != 0) {
+			digit=decimal%2;
+			reverseBinary=reverseBinary + digit;
+			// note that value of decimal changed for whole object instance and also that dividing into an int will crop any decimal places/precision
+			decimal=decimal/2;  	
+		}
+
+		int reverseBinaryLength = reverseBinary.length(); // saves a few repeat calculations
+
+		//need to reverse the binary string to come up with the final answer
+		for (int i=0; i<reverseBinaryLength; i++) {
+			binary=binary + reverseBinary.charAt(reverseBinaryLength-(1+i));
+		}
+
+		return binary;
+		// return Integer.toBinaryString(decimal); // this is a complete cheat but shows initiative
+	}
+}

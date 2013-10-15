@@ -1,0 +1,73 @@
+// Simple mortgage calculator programme
+print("This is a simple program that calculates a mortgage, given borrow amount, term and interest rate");
+
+// initialise a mortgage class
+
+Mortgage mortgageA = new Mortgage();
+
+print("\nPlease enter the amount you want to borrow \t");
+mortgageA.setNotional(readLine());
+
+print("\nPlease enter the number of years for the mortgage \t");
+mortgageA.setTerm(readLine());
+
+print("\nPlease enter the interest rate \t");
+mortgageA.setRate(readLine());
+
+print("The total amount to pay over the life of the mortgage will be " + mortgageA.calculatePremium() + "\n");
+print("The annual payment will be " + mortgageA.annualPayment() + "\n");
+print("The time taken to pay off interest in years will be " + mortgageA.timeToRepayInterest() + "\n");
+
+class Mortgage
+{
+	double notional=0;
+	double term=0;
+	double rate=0;
+	double premium=0;
+	
+	void setNotional (String inNotional) {
+		notional=Double.parseDouble(inNotional);
+		print("Notional is " + notional + "\n");
+	}
+	
+	void setTerm (String inTerm) {
+		term=Double.parseDouble(inTerm);
+		print("Term is " + term + "\n");
+	}
+	
+	void setRate (String inRate) {
+		rate=Double.parseDouble(inRate);
+		rate=rate/100;
+		print("Rate is " + rate + "\n");
+	}
+	
+	double getTerm() {
+		return term;
+	}	
+	
+	double getRate() {
+		return rate;
+	}
+	
+	double getNotional() {
+		return notional;
+	}
+	
+	double calculatePremium() {
+		// the calculation is p=n*(power((1+r),t))
+		premium=notional*Math.pow((1+rate),term);
+		return premium;
+	}
+	
+	double annualPayment() {
+		double annualPayment=0;
+		annualPayment=premium/term;
+		return annualPayment;
+	}
+	
+	double timeToRepayInterest() {
+		double timeToRepay;
+		timeToRepay=((premium-notional)/term)/365;
+		return timeToRepay;
+	}
+}

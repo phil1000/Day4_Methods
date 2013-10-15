@@ -1,0 +1,77 @@
+// Simple coordinates programme
+print("This is a simple program that takes in the coordinates of 2 points and calculates:");
+print("\nthe distance between them;");
+print("\ndistance to origin from point A;");
+
+// first initialise the Point classes
+Point pointA = new Point();
+Point pointB = new Point();
+double distanceAtoB=0;
+double distanceAtoOrigin=0;
+
+print("\nPlease enter the coordinates for Point A, as a string X,Y \t");
+pointA.setCoordinates(readLine());
+
+print("\nPlease enter the coordinates for Point B, as a string X,Y \t");
+pointB.setCoordinates(readLine());
+
+//Calculate distance between points A and B and between A and Origin (0,0)
+distanceAtoB = pointA.distanceToPoint(pointB.getXCoordinate(),pointB.getYCoordinate());
+distanceAtoOrigin = pointA.distanceToPoint(0.0,0.0);
+
+print("AtoB=" + distanceAtoB + "\n");
+print("AtoOrigin=" + distanceAtoOrigin + "\n");
+
+class Point
+{
+	double x1;
+	double y1;
+	
+	void setCoordinates (String strCordinates) {
+		// parse string and then set the X and Y coordinates ... for ease we assume the use has entered X,Y correctly
+		
+		String s1="";
+		String s2="";
+		int i=0;
+		int strCoordLength = strCordinates.length();
+		
+		// Need to set first coordinate
+		while ( (strCordinates.charAt(i) != ',') && (i<strCoordLength) ) {
+			s1 = s1 + strCordinates.charAt(i);
+			i++;
+		}
+		
+		i++; // skip past the , and move onto next coordinate
+		
+		for (int j=i; j<strCoordLength; j++) {
+			s2 = s2 + strCordinates.charAt(j);
+		}
+		
+		x1=Double.parseDouble(s1);
+		y1=Double.parseDouble(s2);
+		
+		print("X=" + x1 + " Y=" + y1 + "\n");
+	}
+	
+	double getXCoordinate() {
+		return x1;
+	}	
+	
+	double getYCoordinate() {
+		return y1;
+	}
+	
+	double distanceToPoint(double x2, double y2) {
+		double distance=0;
+		double side1=0;
+		double side2=0;
+		
+		// the distance between two points is essentially the length of the hypotenuse of a triangle
+		side1=Math.abs(x1-x2);
+		side2=Math.abs(y1-y2);
+		
+		distance=Math.sqrt((side1*side1) + (side2*side2));
+		
+		return distance;
+	}
+}
